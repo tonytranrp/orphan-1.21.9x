@@ -4,6 +4,7 @@
 //
 #include <string>
 #include <span>
+#include <cstddef>
 
 
 struct Resource {
@@ -26,6 +27,12 @@ private:
     const char* _end;
 };
 
-#define LOAD_RESOURCE(x) extern "C" char _binary_resources_##x##_start, _binary_resources_##x##_end;
+#define LOAD_RESOURCE(x)                                     \
+    extern "C" const unsigned char _binary_resources_##x[]; \
+    extern "C" const size_t _binary_resources_##x##_size;
 
-#define GET_RESOURCE(x) Resource{&_binary_resources_##x##_start, &_binary_resources_##x##_end}
+#define GET_RESOURCE(x) Resource{                              \
+    reinterpret_cast<const char*>(_binary_resources_##x),     \
+    reinterpret_cast<const char*>(_binary_resources_##x) +    \
+        _binary_resources_##x##_size                          \
+}

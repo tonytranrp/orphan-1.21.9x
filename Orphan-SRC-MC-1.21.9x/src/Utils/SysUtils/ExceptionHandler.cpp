@@ -5,7 +5,6 @@
 #include "ExceptionHandler.hpp"
 
 #include <build/build_info.h>
-#include <build_info.h>
 #include <Windows.h>
 #include <string>
 #include <spdlog/spdlog.h>
